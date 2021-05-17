@@ -1,0 +1,64 @@
+# {{ ansible_managed }}
+
+[global_tags]
+{% for key, value in telegraf_global_tags %}
+  {{ key }} = "{{ value }}"
+{% endfor %}
+
+[agent]
+  interval = "{{ telegraf_agent_interval }}"
+  round_interval = {{ telegraf_agent_round_interval | lower }}
+  metric_batch_size = {{ telegraf_agent_metric_batch_size }}
+  metric_buffer_limit = {{ telegraf_agent_metric_buffer_limit }}
+  collection_jitter = "{{ telegraf_agent_collection_jitter }}"
+  flush_interval = "{{ telegraf_agent_flush_interval }}"
+  flush_jitter = "{{ telegraf_agent_flush_jitter }}"
+  precision = "{{ telegraf_agent_precision }}"
+  debug = {{ telegraf_agent_debug | lower }}
+  quiet = {{ telegraf_agent_quiet | lower }}
+  logtarget = "{{ telegraf_agent_logtarget }}"
+  logfile = "{{ telegraf_agent_logfile }}"
+  logfile_rotation_interval = "{{ telegraf_agent_logfile_rotation_interval }}"
+  logfile_rotation_max_size = "{{ telegraf_agent_logfile_rotation_max_size }}"
+  logfile_rotation_max_archives = {{ telegraf_agent_logfile_rotation_max_archives }}
+{% if telegraf_agent_log_with_timezone != '' %}
+  log_with_timezone = "{{ telegraf_agent_log_with_timezone }}"
+{% endif %}
+  hostname = "{{ telegraf_agent_hostname }}"
+  omit_hostname = {{ telegraf_agent_omit_hostname | lower }}
+
+{% for output in telegraf_outputs %}
+
+[[outputs.{{ output.name }}]]
+{%   for item in output.config | d([]) %}
+  {{ item }}
+{%   endfor %}
+{% endfor %}
+
+{%- for input in telegraf_inputs %}
+
+[[inputs.{{ input.name }}]]
+{%   for item in input.config  | d([]) %}
+{%     if item is mapping %}
+  [[inputs.{{ input.name }}.{{ item | first }}]]
+{%       for item2 in item.config | d([]) %}
+{%         if item2 is mapping %}
+    [[inputs.{{ input.name }}.{{ item | first }}.{{ item2 | first }}]]
+{%           for item3 in item2.config | d([]) %}
+      {{ item3 }}
+{%           endfor %}
+{%         else %}
+    {{ item2 }}
+{%         endif %}
+{%       endfor %}
+{%     else %}
+  {{ item }}
+{%     endif %}
+{%   endfor %}
+{%   if input.tags is defined %}
+  [[inputs.{{ input.name }}.tags]]
+{%     for tag in input.tags %}
+    {{ tag }}
+{%     endfor %}
+{%  endif %}
+{% endfor %}

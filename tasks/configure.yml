@@ -1,0 +1,15 @@
+---
+- name: Setup Telegraf configuration file
+  template:
+    dest: "{{ telegraf_config_path }}/telegraf.conf"
+    group: telegraf
+    mode: 0644
+    owner: telegraf
+    src: etc/telegraf/telegraf.conf.j2
+  notify: Restart Telegraf
+
+- name: Ensure Telegraf service is in the desired state
+  service:
+    enabled: true
+    name: telegraf
+    state: started

@@ -1,0 +1,23 @@
+---
+- name: Install dependencies
+  apt:
+    name: "{{ telegraf_dependencies }}"
+    state: present
+    update_cache: true
+
+- name: Add InfluxData's key
+  apt_key:
+    state: present
+    url: "{{ telegraf_signing_key }}"
+
+- name: Manage InfluxData APT repositories
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  loop: "{{ telegraf_repositories }}"
+
+- name: Ensure Telegraf package is installed
+  apt:
+    name: telegraf
+    state: "{{ telegraf_package_state }}"
+    update_cache: true
