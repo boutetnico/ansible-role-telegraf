@@ -2,7 +2,7 @@
 - name: Converge
   hosts: all
   roles:
-    - role: ansible-role-telegraf
+    - role: boutetnico.telegraf
 
       telegraf_outputs:
         - name: influxdb_v2
