@@ -1,6 +1,6 @@
 ---
 - name: Setup Telegraf configuration file
-  template:
+  ansible.builtin.template:
     dest: "{{ telegraf_config_path }}/telegraf.conf"
     group: telegraf
     mode: 0644
@@ -9,7 +9,7 @@
   notify: Restart Telegraf
 
 - name: Ensure Telegraf service is in the desired state
-  service:
+  ansible.builtin.service:
     enabled: true
     name: telegraf
     state: started
