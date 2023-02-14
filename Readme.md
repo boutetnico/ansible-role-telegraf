@@ -91,7 +91,7 @@ Example Playbook
                 - period = "5m"
                 - delay = "5m"
                 - interval = "5m"
-                - namespace = "AWS/EC2"
+                - namespaces = ["AWS/EC2"]
                 - metrics:
                   config:
                     - names = ["CPUCreditBalance"]
