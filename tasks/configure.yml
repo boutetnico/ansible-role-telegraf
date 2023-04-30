@@ -3,7 +3,7 @@
   ansible.builtin.template:
     dest: "{{ telegraf_config_path }}/telegraf.conf"
     group: telegraf
-    mode: 0644
+    mode: "0644"
     owner: telegraf
     src: etc/telegraf/telegraf.conf.j2
   notify: Restart Telegraf
