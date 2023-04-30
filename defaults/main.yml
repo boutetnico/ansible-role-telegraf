@@ -12,15 +12,15 @@ telegraf_global_tags: {}
 # rack: "1a"
 
 telegraf_agent_interval: 10s
-telegraf_agent_round_interval: True
+telegraf_agent_round_interval: true
 telegraf_agent_metric_batch_size: 1000
 telegraf_agent_metric_buffer_limit: 10000
 telegraf_agent_collection_jitter: 0s
 telegraf_agent_flush_interval: 10s
 telegraf_agent_flush_jitter: 0s
 telegraf_agent_precision: ''
-telegraf_agent_debug: False
-telegraf_agent_quiet: False
+telegraf_agent_debug: false
+telegraf_agent_quiet: false
 telegraf_agent_logtarget: file
 telegraf_agent_logfile: ''
 telegraf_agent_logfile_rotation_interval: 0d
@@ -28,7 +28,7 @@ telegraf_agent_logfile_rotation_max_size: 0MB
 telegraf_agent_logfile_rotation_max_archives: 5
 telegraf_agent_log_with_timezone: ''
 telegraf_agent_hostname: ''
-telegraf_agent_omit_hostname: False
+telegraf_agent_omit_hostname: false
 
 telegraf_outputs: []
 # - name: influxdb_v2
